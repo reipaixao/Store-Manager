@@ -3,10 +3,14 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const productsController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 const {
   validateName,
   validateQuantity,
   validateIfExists } = require('./controllers/validation/validationProducts');
+
+const { validateProduct, validateSales, validateProductQuantity,
+} = require('./controllers/validation/validationSales');
 
 const app = express();
 
@@ -23,8 +27,8 @@ app.post('/products', validateName, validateIfExists, validateQuantity, products
 
 // Requisito 2 - Crie um endpoint para listar os produtos
 
-app.get('/products', productsController.getAll);
 app.get('/products/:id', productsController.getById);
+app.get('/products', productsController.getAll);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
@@ -37,3 +41,7 @@ app.put('/products/:id', validateName, validateQuantity, productsController.upda
 // Requisito 4 - Crie um endpoint para deletar um produto
 
 app.delete('/products/:id', productsController.remove);
+
+// Requisito 5 - Crie um endpoint para cadastrar vendas
+
+app.post('/sales', validateProduct, validateSales, validateProductQuantity, salesController.create);

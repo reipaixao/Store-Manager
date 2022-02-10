@@ -19,13 +19,7 @@ app.get('/', (_request, response) => {
 
 // Requisito 1 - Crie um endpoint para o cadastro de produtos
 
-app.post(
-  '/products',
-  validateName,
-  validateIfExists,
-  validateQuantity,
-  productsController.add,
-);
+app.post('/products', validateName, validateIfExists, validateQuantity, productsController.create);
 
 // Requisito 2 - Crie um endpoint para listar os produtos
 
@@ -35,3 +29,11 @@ app.get('/products/:id', productsController.getById);
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
 });
+
+// Requisito 3 - Crie um endpoint para atualizar um produto
+
+app.put('/products/:id', validateName, validateQuantity, productsController.update);
+
+// Requisito 4 - Crie um endpoint para deletar um produto
+
+app.delete('/products/:id', productsController.remove);

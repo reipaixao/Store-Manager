@@ -1,34 +1,36 @@
 const connection = require('./connection');
 
-const add = async (name, quantity) => {
-  const [result] = await connection
-    .query(
-      'INSERT INTO products (name, quantity) VALUES (?, ?);',
-      [name, quantity],
-    );
-  
-  return {
-    id: result.insertId,
-    name,
-    quantity,
-  };
+const create = async (name, quantity) => {
+  const [rows] = await connection.query('INSERT INTO products (name, quantity) VALUES (?, ?);',
+  [name, quantity]);
+  return { id: rows.insertId, name, quantity };
 };
 
 const getAll = async () => {
-  const [response] = await connection
-    .query('SELECT * FROM products');
-    return response;
+  const [rows] = await connection.query('SELECT * FROM products');
+  return rows;
 };
 
 const getById = async (id) => {
-  const [response] = await connection
-    .query('SELECT * FROM products WHERE id = ?', [id]);
-  if (!response.length) return null;
-  return response[0];
+  const [rows] = await connection.query('SELECT * FROM products WHERE id = ?', [id]);
+  if (!rows) return null;
+  return rows[0]; // Aula 23.1 - Introdução - Arquitetura de Software
+};
+
+const update = async (id, name, quantity) => {
+  await connection.query('UPDATE products SET name = ?, quantity = ? WHERE id=?',
+  [name, quantity, id]);
+  return { id, name, quantity };
+};
+
+const remove = async (id) => {
+  await connection.query('DELETE FROM products WHERE id = ?', [id]);
 };
 
 module.exports = {
-  add,
+  create,
   getAll,
   getById,
+  update,
+  remove,
 };

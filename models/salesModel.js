@@ -13,17 +13,6 @@ const create = async (sales) => {
   return row;
 };
 
-// const getAllSales = async () => {
-//   const [row] = await connection.query(
-//   `SELECT s.date AS date, sp.product_id AS product_id, sp.quantity AS quantity
-//   FROM sales_products AS sp
-//   INNER JOIN sales AS s
-//   ON s.id = sp.sale_id;`,
-//   );
-
-//   return row;
-// };
-
 const getAllSales = async (id) => {
   if (id) {
     const [row] = await connection.execute(
@@ -43,7 +32,13 @@ const getAllSales = async (id) => {
   return row;
 };
 
+const update = async (id, quantity) => {
+  await connection.query('UPDATE sales_products SET quantity = ? WHERE product_id = ?',
+    [quantity, id]);
+};
+
 module.exports = {
   create,
   getAllSales,
+  update,
 };

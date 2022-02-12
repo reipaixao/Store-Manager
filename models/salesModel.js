@@ -24,7 +24,7 @@ const getAllSales = async (id) => {
     return row;
   }
 
-  const [row] = await connection.query(
+  const [row] = await connection.execute(
     `SELECT sp.sale_id AS saleId, s.date AS date,
     sp.product_id AS product_id, sp.quantity AS quantity
     FROM sales_products AS sp INNER JOIN sales AS s ON s.id = sp.sale_id;`,
@@ -33,7 +33,7 @@ const getAllSales = async (id) => {
 };
 
 const update = async (id, quantity) => {
-  await connection.query('UPDATE sales_products SET quantity = ? WHERE product_id = ?',
+  await connection.execute('UPDATE sales_products SET quantity = ? WHERE product_id = ?',
     [quantity, id]);
 };
 

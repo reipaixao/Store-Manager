@@ -9,10 +9,10 @@ const create = async (req, res) => {
   return res.status(201).json(newProduct);
 };
 
-const getAll = rescue(async (_req, res) => {
+const getAll = async (_req, res) => {
   const products = await productsService.getAll();
   return res.status(200).json(products);
-});
+};
 
 const getById = rescue(async (req, res) => {
   const product = await productsService.getById(req.params.id);

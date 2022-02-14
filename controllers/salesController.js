@@ -1,5 +1,6 @@
 const rescue = require('express-rescue');
 const salesService = require('../services/salesServices');
+// const salesModels = require('../models/salesModel');
 
 const create = rescue(async (req, res) => {
   const newSale = await salesService.create(req.body);
@@ -34,9 +35,21 @@ const update = rescue(async (req, res) => {
   res.status(200).json({ saleId: id, itemUpdated: req.body });
 });
 
+const remove2 = rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const sale = await salesService.getById(id);
+  if (!sale) return res.status(404).json({ message: 'Sale not found' });
+
+  await salesService.removeSale(id);
+
+  res.status(200).json(sale);
+});
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove2,
 };

@@ -37,8 +37,38 @@ const update = async (id, quantity) => {
     [quantity, id]);
 };
 
+const removeSale = async (id) => {
+  await connection.execute('DELETE FROM sales WHERE id = ?', [id]);
+};
+
+const getById2 = async ({ id }) => {
+  const [row] = await connection.execute(
+    `
+    SELECT s.date AS date,
+    sp.product_id AS product_id,
+    sp.quantity AS quantity
+    FROM sales_products AS sp
+    INNER JOIN sales AS s
+    ON s.id = sp.sale_id
+    WHERE sp.sale_id = ?
+    `,
+    [id],
+  );
+  if (!row.length) return null;
+  return row;
+};
+
+const remove = async (id) => {
+  await connection.execute(
+    'DELETE FROM sales WHERE id = ?', [id],
+  );
+};
+
 module.exports = {
   create,
   getAllSales,
   update,
+  removeSale,
+  getById2,
+  remove,
 };

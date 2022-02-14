@@ -15,9 +15,9 @@ const getAll = async (_req, res) => {
 
 const getById = rescue(async (req, res) => {
   const { id } = req.params;
-  const sales = await salesService.getAllSalesById(id);
+  const sales = await salesService.getById(id);
 
-  if (sales.length === 0) return res.status(404).json({ message: 'Sale not found' });
+  if (!sales) return res.status(404).json({ message: 'Sale not found' });
 
   return res.status(200).json(sales);
 });
@@ -26,7 +26,7 @@ const update = rescue(async (req, res) => {
   const { id } = req.params;
   const [product] = req.body;
 
-  const sales = await salesService.getAllSalesById(id);
+  const sales = await salesService.getById(id);
 
   if (sales.length === 0) return res.status(404).json({ message: 'Sale not found' });
 
@@ -41,7 +41,7 @@ const remove2 = rescue(async (req, res) => {
   const sale = await salesService.getById(id);
   if (!sale) return res.status(404).json({ message: 'Sale not found' });
 
-  await salesService.removeSale(id);
+  await salesService.remove(id);
 
   res.status(200).json(sale);
 });

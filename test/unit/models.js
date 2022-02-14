@@ -7,7 +7,7 @@ const salesModel = require('../../models/salesModel');
 // // Usando código da aula 23.4 como modelo:
 // // https://github.com/tryber/sd-014-c-live-lectures/blob/lecture/23.4/movies-api/tests/models/movies/getAllModel.test.js
 
-describe('Busca todos produtos do banco', () => {
+describe('Busca todos produtos do banco *Models', () => {
   describe('Quando não existir nenhum produto cadastrado', () => {
     before(() => {
       sinon.stub(connection, 'execute').resolves([[]]);
@@ -118,7 +118,7 @@ describe('Quando remove um produto', () => {
   });
 });
 
-describe('Busca todas as vendas no banco', () => {
+describe('Busca todas as vendas no banco *models', () => {
   describe('Quando não existir nenhuma venda', () => {
     before(() => {
       sinon.stub(connection, 'execute').resolves([[]]);
@@ -129,7 +129,7 @@ describe('Busca todas as vendas no banco', () => {
     });
 
     it('retorna um array', async () => {
-      const result = await salesModel.getAllSales();
+      const result = await salesModel.getAll();
 
       expect(result).to.be.an('array');
     });

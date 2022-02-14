@@ -9,7 +9,7 @@ const salesService = require ('../../services/salesServices');
 // Usando código da aula 23.4 como modelo:
 // https://github.com/tryber/sd-014-c-live-lectures/blob/lecture/23.4/movies-api/tests/models/movies/getAllModel.test.js
 
-describe('Busca todos os produtos do banco', () => {
+describe('Busca todos os produtos do banco, *service', () => {
   describe('Quando não existir produto cadastrado', () => {
     before(() => {
       sinon.stub(productsModel, 'getAll').resolves([]);
@@ -64,11 +64,11 @@ describe('Cria um novo produto', () => {
 describe('Busca todos os produtos do banco', () => {
   describe('Quando não existir produto cadastrado', () => {
     before(() => {
-      sinon.stub(salesModel, 'getAllSales').resolves([]);
+      sinon.stub(salesModel, 'getAll').resolves([]);
     });
 
     after(() => {
-      salesModel.getAllSales.restore();
+      salesModel.getAll.restore();
     });
 
     it('retorna um array', async () => {

@@ -13,23 +13,26 @@ const create = async (sales) => {
   return row;
 };
 
-const getAllSales = async (id) => {
-  if (id) {
-    const [row] = await connection.execute(
-        `SELECT s.date AS date,
-        sp.product_id AS product_id, sp.quantity AS quantity
-        FROM sales_products AS sp INNER JOIN sales AS s ON s.id = sp.sale_id
-        WHERE sp.sale_id = ?;`, [id],
-    );
-    return row;
-  }
-
+const getAll = async () => {
   const [row] = await connection.execute(
-    `SELECT sp.sale_id AS saleId, s.date AS date,
-    sp.product_id AS product_id, sp.quantity AS quantity
-    FROM sales_products AS sp INNER JOIN sales AS s ON s.id = sp.sale_id;`,
+    `SELECT sp.sale_id AS saleId, s.date AS date, sp.product_id AS product_id,
+    sp.quantity AS quantity FROM sales_products AS sp INNER JOIN sales AS s ON s.id = sp.sale_id;
+    `,
   );
-  return row;
+    return row;
+};
+
+const getById = async (id) => {  
+  const [row] = await connection.execute(
+    `SELECT s.date AS date, sp.product_id AS product_id, sp.quantity AS quantity
+    FROM sales_products AS sp INNER JOIN sales AS s ON s.id = sp.sale_id
+    WHERE sp.sale_id = ?
+    `, [id],
+  );
+
+    if (!row.length) return null;
+
+    return row;
 };
 
 const update = async (id, quantity) => {
@@ -37,38 +40,32 @@ const update = async (id, quantity) => {
     [quantity, id]);
 };
 
-const removeSale = async (id) => {
+const remove = async (id) => {
   await connection.execute('DELETE FROM sales WHERE id = ?', [id]);
 };
 
-const getById2 = async ({ id }) => {
-  const [row] = await connection.execute(
-    `
-    SELECT s.date AS date,
-    sp.product_id AS product_id,
-    sp.quantity AS quantity
-    FROM sales_products AS sp
-    INNER JOIN sales AS s
-    ON s.id = sp.sale_id
-    WHERE sp.sale_id = ?
-    `,
-    [id],
-  );
-  if (!row.length) return null;
-  return row;
-};
-
-const remove = async (id) => {
-  await connection.execute(
-    'DELETE FROM sales WHERE id = ?', [id],
-  );
-};
+// const getById2 = async ({ id }) => {
+//   const [row] = await connection.execute(
+//     `
+//     SELECT s.date AS date,
+//     sp.product_id AS product_id,
+//     sp.quantity AS quantity
+//     FROM sales_products AS sp
+//     INNER JOIN sales AS s
+//     ON s.id = sp.sale_id
+//     WHERE sp.sale_id = ?
+//     `,
+//     [id],
+//   );
+//   if (!row.length) return null;
+//   return row;
+// };
 
 module.exports = {
   create,
-  getAllSales,
+  getAll,
   update,
-  removeSale,
-  getById2,
+  // getById2,
   remove,
+  getById,
 };

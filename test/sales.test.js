@@ -785,7 +785,7 @@ describe('Sales', () => {
   });
 
   describe('11 - Atualize a quantidade de produtos', () => {
-    it.skip('Será validado que é possível atualizar a quantidade do produto ao fazer uma compra', async () => {
+    it('Será validado que é possível atualizar a quantidade do produto ao fazer uma compra', async () => {
       let result;
       let responseProductId;
 
@@ -818,7 +818,7 @@ describe('Sales', () => {
         });
     });
 
-    it.skip('Será validado que é possível atualizar a quantidade do produto ao deletar uma compra', async () => {
+    it('Será validado que é possível atualizar a quantidade do produto ao deletar uma compra', async () => {
       let result;
       let resultSales;
       let responseProductId;
@@ -862,7 +862,7 @@ describe('Sales', () => {
   });
 
   describe('12 - Valide a quantidade de produtos', () => {
-    it.skip('Será validado que o estoque do produto nunca fique com a quantidade menor que zero', async () => {
+    it('Será validado que o estoque do produto nunca fique com a quantidade menor que zero', async () => {
       let result;
       let responseProductId;
 

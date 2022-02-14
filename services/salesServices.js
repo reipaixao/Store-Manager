@@ -8,20 +8,20 @@ const create = async (sales) => {
 };
 
 const getAllSales = async () => {
-  const products = await salesModel.getAllSales();
+  const products = await salesModel.getAll();
   return products;
 };
 
-const getAllSalesById = async (id) => {
-  const sale = await salesModel.getAllSales(id);
-  return sale;
-};
-
 const getById = async (id) => {
-  const sale = await salesModel.getById2(id);
-
+  const sale = await salesModel.getById(id);
   return sale;
 };
+
+// const getById = async (id) => {
+//   const sale = await salesModel.getById2(id);
+
+//   return sale;
+// };
 
 const update = async ({ product_id: id, quantity }) => {
   const updatedSale = await salesModel.update(id, quantity);
@@ -29,7 +29,7 @@ const update = async ({ product_id: id, quantity }) => {
   return updatedSale;
 };
 
-const removeSale = async (id) => {
+const remove = async (id) => {
   if (!id) return null;
   const [sale] = await getById(id);
 
@@ -46,8 +46,7 @@ const removeSale = async (id) => {
 module.exports = {
   create,
   getAllSales,
-  getAllSalesById,
-  update,
-  removeSale,
   getById,
+  update,
+  remove,
 };

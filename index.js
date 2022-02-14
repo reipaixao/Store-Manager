@@ -53,8 +53,24 @@ app.get('/sales/:id', salesController.getById);
 
 // Requisito 7 - Crie um endpoint para atualizar uma venda
 
-app.put('/sales/:id', validateProduct, validateSales, validateProduct, salesController.update);
+app.put(
+'/sales/:id',
+validateProduct,
+validateSales,
+validateProductQuantity,
+salesController.update,
+);
 
 // Requisito 10 - Crie um endpoint para deletar uma venda
 
 app.delete('/sales/:id', salesController.remove2);
+
+// Requisito 11 - Atualize a quantidade de produtos
+
+app.put(
+'/sales/:id', 
+validateProduct, 
+validateSales, 
+validateProductQuantity, 
+salesController.update,
+);

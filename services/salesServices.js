@@ -17,7 +17,7 @@ const getById = async (id) => {
   return sale;
 };
 
-// Consulta ao PR #59
+// Consulta ao PR #359
 const updateQuantity = async (sales) => {
   const update = sales.map(async (sale) => {
     const { product_id: id, quantity: saleQuantity } = sale;

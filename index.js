@@ -27,7 +27,7 @@ app.listen(process.env.PORT, () => {
 
 // Requisito 1 - Crie um endpoint para o cadastro de produtos
 
-app.post('/products', validateName, validateIfExists, validateQuantity, productsController.create);
+app.post('/products', validateName, validateIfExists, validateQuantity, productsController.update);
 
 // Requisito 2 - Crie um endpoint para listar os produtos
 

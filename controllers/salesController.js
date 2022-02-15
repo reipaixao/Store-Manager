@@ -3,9 +3,12 @@ const salesService = require('../services/salesServices');
 // const salesModels = require('../models/salesModel');
 
 const create = rescue(async (req, res) => {
-  const newSale = await salesService.updateQuantity(req.body);
+  const newSale = await salesService.create(req.body);
 
-  return res.status(201).json({ id: newSale.insertId, itemsSold: req.body });
+  return res.status(201).json({
+    id: newSale.insertId,
+    itemsSold: req.body,
+  });
 });
 
 const getAll = async (_req, res) => {

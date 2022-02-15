@@ -60,7 +60,7 @@ describe('Testes das camadas Model, Service e Controller', () => {
     });
   });
 
-  describe.skip('14 - Escreva testes para cobrir 60% das camadas da sua aplicação', () => {
+  describe('14 - Escreva testes para cobrir 60% das camadas da sua aplicação', () => {
   
     it('Será validado que cobertura total das linhas dos arquivos nas pastas `models`, `services` e `controllers` é maior ou igual a 60%', async () => {
       const coverageResults = await readCoverageFile();

@@ -40,46 +40,14 @@ const update = async (id, quantity) => {
     [quantity, id]);
 };
 
-// const update = async (body, id) => {
-//   const query = `UPDATE sales_products
-//   SET product_id =  ?,  quantity = ?
-//   WHERE sale_id = ?`;
-
-//   await Promise.all(body.map((b) => connection.execute(query, [
-//     b.product_id, b.quantity, id])));
-
-//     return {
-//       saleId: id,
-//       itemUpdated: body,
-//     };
-// };
-
 const remove = async (id) => {
   await connection.execute('DELETE FROM sales WHERE id = ?', [id]);
 };
-
-// const getById2 = async ({ id }) => {
-//   const [row] = await connection.execute(
-//     `
-//     SELECT s.date AS date,
-//     sp.product_id AS product_id,
-//     sp.quantity AS quantity
-//     FROM sales_products AS sp
-//     INNER JOIN sales AS s
-//     ON s.id = sp.sale_id
-//     WHERE sp.sale_id = ?
-//     `,
-//     [id],
-//   );
-//   if (!row.length) return null;
-//   return row;
-// };
 
 module.exports = {
   create,
   getAll,
   update,
-  // getById2,
   remove,
   getById,
 };

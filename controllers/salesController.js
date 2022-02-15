@@ -3,7 +3,7 @@ const salesService = require('../services/salesServices');
 // const salesModels = require('../models/salesModel');
 
 const create = rescue(async (req, res) => {
-  const newSale = await salesService.create(req.body);
+  const newSale = await salesService.create2(req.body);
 
   return res.status(201).json({
     id: newSale.insertId,

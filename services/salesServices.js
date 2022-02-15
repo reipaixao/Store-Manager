@@ -7,6 +7,19 @@ const create = async (sales) => {
   return createSale;
 };
 
+const create2 = async (sales) => {
+  const createSale = salesModel.create(sales);
+  await Promise.all(sales.map(async (sale) => {
+    const { product_id: id, quantity: quantityAmount } = sale;
+
+    const product = await productsServices.getById(id);
+    product.quantity -= quantityAmount;
+    await productsServices.update(product);
+  }));
+  
+  return createSale;
+};
+
 const getAllSales = async () => {
   const products = await salesModel.getAll();
   return products;
@@ -28,7 +41,7 @@ const remove = async (id) => {
   const [sale] = await getById(id);
 
   const product = await productsServices.getById(sale.product_id);
-  // product.quantity += sale.quantity;
+  product.quantity += sale.quantity;
 
   const removedSale = await salesModel.remove(id);
 
@@ -39,6 +52,7 @@ const remove = async (id) => {
 
 module.exports = {
   create,
+  create2,
   getAllSales,
   getById,
   update,

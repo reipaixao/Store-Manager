@@ -3,6 +3,8 @@ const { expect } = require('chai');
 const connection = require('../../models/connection');
 const productsModel = require('../../models/productsModel');
 const salesModel = require('../../models/salesModel');
+const validationsP = require('../../controllers/validation/validationProducts');
+const validationsS = require('../../controllers/validation/validationSales');
 
 // // Usando código da aula 23.4 como modelo:
 // // https://github.com/tryber/sd-014-c-live-lectures/blob/lecture/23.4/movies-api/tests/models/movies/getAllModel.test.js
@@ -49,6 +51,31 @@ describe('Insere um novo filme no BD', () => {
     });
   });
 });
+
+// describe('Insere um novo produto no BD', () => {
+//   const payloadProduct = {
+//     name: 'À Palo Santo',
+//     quantity: 10,
+//   };
+
+//   before(async () => {
+//     const execute = [{ insertId: 1 }];
+
+//     sinon.stub(connection, 'execute').resolves(execute);
+//   });
+
+//   after(async () => {
+//     connection.execute.restore();
+//   });
+
+//   describe('quando é inserido com sucesso', async () => {
+//     it('retorna um objeto', async () => {
+//       const response = await salesModel.create([{ name: 'À Palo Santo', quantity: 10, }]);
+
+//       expect(response).to.be.a('object');
+//     });
+//   });
+// });
  
 describe('quando é chamado um id', () => {
   before(async () => {
@@ -242,3 +269,23 @@ describe('Quando atualiza um produto', () => {
 // });
 
 // Consulta ao PR #68
+
+describe('Testa validations', () => {
+  it('Se possui os validations válidos', () => {
+    expect(validationsP).to.include.all.keys(
+      'validateIfExists', 
+      'validateName', 
+      'validateQuantity',
+    );
+  });
+});
+
+describe('Testa validations', () => {
+  it('Se possui os validations válidos', () => {
+    expect(validationsS).to.include.all.keys(
+      'validateProduct', 
+      'validateProductQuantity', 
+      'validateSales',
+    );
+  });
+});

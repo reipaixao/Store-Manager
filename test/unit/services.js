@@ -106,3 +106,62 @@ describe('Cria uma nova venda', () => {
   expect(result).to.be.a('object');
   });
 });
+
+describe('Cria uma nova venda', () => {    
+  const payloadProduct = {
+    name: 'IPA Maracujá',
+    quantity: 13,
+  };
+
+  before(() => {
+    const ID_EXAMPLE = 1;
+    sinon.stub(salesModel, 'create').resolves({ id: ID_EXAMPLE });
+  });
+
+  after(() => {
+    salesModel.create.restore();
+  });
+
+  it('retorna um objeto', async () => {
+    const result = await salesService.updateQuantity([payloadProduct]);
+
+    expect(result).to.be.an('array');
+  });
+});
+
+
+describe('Cria uma nova venda e retorna pelo ID', () => {    
+ 
+  before(() => {
+    const ID_EXAMPLE = 1;
+    sinon.stub(salesModel, 'getById').resolves({ id: ID_EXAMPLE });
+  });
+
+  after(() => {
+    salesModel.getById.restore();
+  });
+
+  it('retorna um objeto', async () => {
+  const result = await salesService.getById(1);
+
+  expect(result).to.be.a('object');
+  });
+});
+
+describe('Testa função de update', () => {    
+ 
+  before(() => {
+    const ID_EXAMPLE = 1;
+    sinon.stub(salesModel, 'update').resolves({ id: ID_EXAMPLE, quantity: 3 });
+  });
+
+  after(() => {
+    salesModel.update.restore();
+  });
+
+  it('retorna um objeto', async () => {
+  const result = await salesService.update(1, 3);
+
+  expect(result).to.be.a('object');
+  });
+});

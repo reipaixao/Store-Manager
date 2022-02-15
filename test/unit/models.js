@@ -118,6 +118,29 @@ describe('Quando remove um produto', () => {
   });
 });
 
+describe('quando é chamado um id em salesModel', () => {
+  before(async () => {
+    const payloadProduct = {
+      id: 3,
+      name: 'Saison Umbu',
+      quantity: 151
+    };
+
+    sinon.stub(connection, 'execute').resolves([[payloadProduct]]);
+  })
+
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it('o objeto possui o "id","name" e "quantitiy"', async () => {
+
+    const result = await salesModel.getById(3);
+
+    expect(result).to.be.an('array');
+  });
+});
+
 describe('Busca todas as vendas no banco *models', () => {
   describe('Quando não existir nenhuma venda', () => {
     before(() => {
@@ -136,34 +159,92 @@ describe('Busca todas as vendas no banco *models', () => {
   });
 });
 
-// describe('Atualiza venda no BD', () => {
-//   const payloadProduct = {
-//     id: 1,
-//     name: 'IPA Maracujá',
-//     quantity: 13,
-//   };
+describe('Atualiza produto no BD', () => {
+  const payloadProduct = {
+    id: 1,
+    name: 'IPA Maracujá',
+    quantity: 13,
+  };
 
-//   before(() => {
-//     sinon.stub(connection, 'execute').resolves([[payloadProduct]]);
-//   });
+  before(() => {
+    sinon.stub(connection, 'execute').resolves([[payloadProduct]]);
+  });
+
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it('retorna um objeto', async () => {
+    const result = await salesModel.update(1, 12);
+
+    expect(result).to.be.an('undefined');
+  });
+});
+
+describe('Quando remove um produto', () => {
+  const products = {
+      id: 1,
+      name: 'Wine Ale',
+      quantity: 10
+  }
+  before(() => {
+      sinon.stub(connection, 'execute').resolves([[products]]);
+  });
+
+  after(() => {
+      connection.execute.restore();
+  });
+
+  it('ele realmente é excluido do BD', async () => {
+      await salesModel.remove();
+  });
+});
+
+describe('Insere um novo produto no BD', () => {
+  const payloadProduct = {
+    name: 'À Palo Santo',
+    quantity: 10,
+  };
+
+  before(async () => {
+    const execute = [{ insertId: 1 }];
+
+    sinon.stub(connection, 'execute').resolves(execute);
+  });
+
+  after(async () => {
+    connection.execute.restore();
+  });
+
+  describe('quando é inserido com sucesso', async () => {
+    it('retorna um objeto', async () => {
+      const response = await salesModel.create([payloadProduct]);
+
+      expect(response).to.be.a('object');
+    });
+  });
+});
+
+// describe('quando é chamado um id', () => {
+//   before(async () => {
+//     const payloadProduct = {
+//       id: 3,
+//       name: 'Saison Umbu',
+//       quantity: 151
+//     };
+
+//     sinon.stub(connection, 'execute').resolves([payloadProduct]);
+//   })
 
 //   after(() => {
 //     connection.execute.restore();
 //   });
 
-//   it('retorna um objeto', async () => {
-//     const result = await salesModel.create([
-//       {
-//         product_id: 1,
-//         quantity: 20,
-//       },
-//       {
-//         product_id: 3,
-//         quantity: 37,
-//       },
-//     ]);
+//   it('o objeto possui o "id","name" e "quantitiy"', async () => {
 
-//     expect(result).to.be.an('object');
+//     const result = await salesModel.getById(3);
+
+//     expect(result).to.be.a('object');
 //   });
 // });
 

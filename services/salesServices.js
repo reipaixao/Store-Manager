@@ -17,6 +17,19 @@ const getById = async (id) => {
   return sale;
 };
 
+// Consulta ao PR #59
+const updateQuantity = async (sales) => {
+  const update = sales.map(async (sale) => {
+    const { product_id: id, quantity: saleQuantity } = sale;
+
+    const product = await productsServices.getById(id);
+    product.quantity -= saleQuantity;
+
+    await productsServices.update(product);
+  });
+  return update;
+};
+
 // const getById = async (id) => {
 //   const sale = await salesModel.getById2(id);
 
@@ -49,4 +62,5 @@ module.exports = {
   getById,
   update,
   remove,
+  updateQuantity,
 };

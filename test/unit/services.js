@@ -123,9 +123,9 @@ describe('Cria uma nova venda', () => {
   });
 
   it('retorna um objeto', async () => {
-    const result = await salesService.updateQuantity([payloadProduct]);
+    const result = await salesService.create([payloadProduct]);
 
-    expect(result).to.be.an('array');
+    expect(result).to.be.an('object');
   });
 });
 

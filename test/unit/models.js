@@ -200,12 +200,7 @@ describe('Quando remove um produto', () => {
   });
 });
 
-describe('Insere um novo produto no BD', () => {
-  const payloadProduct = {
-    name: 'À Palo Santo',
-    quantity: 10,
-  };
-
+describe('Quando atualiza um produto', () => {
   before(async () => {
     const execute = [{ insertId: 1 }];
 
@@ -216,12 +211,10 @@ describe('Insere um novo produto no BD', () => {
     connection.execute.restore();
   });
 
-  describe('quando é inserido com sucesso', async () => {
-    it('retorna um objeto', async () => {
-      const response = await salesModel.create([payloadProduct]);
+  it('retorna um objeto', async () => {
+    const response = await productsModel.update(1, 3);
 
-      expect(response).to.be.a('object');
-    });
+    expect(response).to.be.a('object');
   });
 });
 
